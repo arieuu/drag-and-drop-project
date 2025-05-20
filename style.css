@@ -1,3 +1,6 @@
+/* We are gonna do all the styling we need for the components but we will be adding
+them dynamically, that means when we add them there will already be styles waiting for them */
+
 body {
     background-color: black;
     overflow: hidden;
