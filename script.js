@@ -4,6 +4,8 @@
 
 let empty;
 let selected;
+let doesExist;
+let swapElement;
 
 function dragStart(e) {
 
@@ -135,12 +137,32 @@ function dragOver(e) {
 }
 
 function dragEnter() {
+    e.preventDefault();
+
+    if(this.querySelector(".fill") !== null) { // Check if smt is there (img)
+        doesExist = true;
+        const elements = this.querySelectorAll(".fill");
+        swapElement = elements[0];
+
+    } else {
+
+        // If there's no image already there we just need to drop the new one there
+
+        doesExist = false
+    }
 }
 
 function dragLeave() {
+    this.className = "empty"
 }
 
 function dragDrop() {
+    this.className = "empty";
+    
+    // Making the image visible again and then appending it to the new div
+
+    selected.style.visibility = "visible";
+    this.append(selected);
 }
 
 for (const empty of empties) {
