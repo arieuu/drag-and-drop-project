@@ -6,12 +6,14 @@ let empty;
 let selected;
 let doesExist;
 let swapElement;
+let parentOfFill;
 
 function dragStart(e) {
 
     // "this" will refer to the object/div where this callback function is being invoked
 
     selected = this;
+    parentOfFill = selected.parentNode; // Getting the parent div w the image
     this.className += " hold" // Class to add style (border to selected div)
 
     // Wait for a little bit before hiding content of div so that we have the image visible after dragging
@@ -21,7 +23,14 @@ function dragStart(e) {
     }, 0);
 }
 
-function dragEnd(e) {
+function dragEnd() {
+
+    // Making sure if we drag the img to a spot that cant take it we return it to its old position
+
+    this.className = "fill";
+    if(selected.style.visibility === "hidden") {
+        selected.style.visibility = "visible";
+    }
 }
 
 function onDeleteBtnClick(fill, file) {
@@ -136,7 +145,7 @@ function dragOver(e) {
 
 }
 
-function dragEnter() {
+function dragEnter(e) {
     e.preventDefault();
 
     if(this.querySelector(".fill") !== null) { // Check if smt is there (img)
@@ -153,7 +162,7 @@ function dragEnter() {
 }
 
 function dragLeave() {
-    this.className = "empty"
+    this.className = "empty";
 }
 
 function dragDrop() {
@@ -162,6 +171,12 @@ function dragDrop() {
     // Making the image visible again and then appending it to the new div
 
     selected.style.visibility = "visible";
+
+    if(doesExist) {
+        parentOfFill.append(swapElement)
+    }
+
+    parentOfFill.children[1].value = "";
     this.append(selected);
 }
 
