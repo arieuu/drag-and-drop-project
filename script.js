@@ -10,6 +10,22 @@ function dragend(e) {
 
 }
 
+function onDeleteBtnClick(fill, file) {
+    fill.remove();
+}
+
+function addDeleteIcon(fill, file) {
+    const deleteIcon = document.createElement("div");
+    deleteIcon.className = "delete";
+    deleteIcon.innerText = "X";
+    fill.appendChild(deleteIcon);
+
+    // An event listener that will call a function to remove the respective image when the delete icon is clicked
+
+    deleteIcon.addEventListener("click", () => onDeleteBtnClick(fill, file));
+
+}
+
 function getImgData(file, emptyBox) {
     const getFile = file.files[0];
     const image = document.createElement("img");
@@ -19,7 +35,7 @@ function getImgData(file, emptyBox) {
 
     emptyBox.appendChild(fill);
 
-    // addDeleteIcon(fill, file); // Function to add the icon afterwards
+    addDeleteIcon(fill, file); // Function to add the icon afterwards
 
     /**
      * Creating a javascript file reader to know when a file has been done loading and
