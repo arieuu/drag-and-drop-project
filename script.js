@@ -2,16 +2,31 @@
 
 // Functions that take the events
 
-function dragstart(e) {
+let empty;
+let selected;
 
+function dragStart(e) {
+
+    // "this" will refer to the object/div where this callback function is being invoked
+
+    selected = this;
+    this.className += " hold" // Class to add style (border to selected div)
+
+    // Wait for a little bit before hiding content of div so that we have the image visible after dragging
+
+    setTimeout(() => {
+        this.style.visibility = "hidden"
+    }, 0);
 }
 
-function dragend(e) {
-
+function dragEnd(e) {
 }
 
 function onDeleteBtnClick(fill, file) {
+    // Function to delete image from square
+
     fill.remove();
+    file.value = ""; // To completely wipe the value of img after we remove it
 }
 
 function addDeleteIcon(fill, file) {
@@ -93,4 +108,44 @@ for(let i = 0; i < 3; i++) {
         file.addEventListener("change", () => getImgData(file, emptyBox))
 
     }
+}
+
+/**
+ * After we're done populating all the divs we also need to add event listeners to
+ * all the empty divs so that we can detect if we dragged something inside them, outside or over
+ * and then have each one of them act accordingly
+ */
+
+empties = document.querySelectorAll(".empty"); // This will be a nodelist
+
+// Creating the callback functions those event listeners will call to
+
+function dragOver(e) {
+    /**
+     * When drag over we want to add a class of .hover if there isn't any and paint the particular 
+     * div red
+     */
+
+    e.preventDefault();
+
+    if(!this.className.includes("hovered")) {
+        this.className += " hovered"
+    }
+
+}
+
+function dragEnter() {
+}
+
+function dragLeave() {
+}
+
+function dragDrop() {
+}
+
+for (const empty of empties) {
+    empty.addEventListener("dragover", dragOver);
+    empty.addEventListener("dragenter", dragEnter);
+    empty.addEventListener("dragleave", dragLeave);
+    empty.addEventListener("drop", dragDrop);
 }

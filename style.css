@@ -91,7 +91,7 @@ body {
 }
 
 .hovered {
-    background-color: red;
+    background: red;
 }
 
 .hold {
